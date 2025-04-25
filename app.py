@@ -1,27 +1,33 @@
+from flask import Flask, request, send_file, render_template
+from flask_cors import CORS
 import qrcode
+from io import BytesIO
 
-def generate_qr_code(data, filename='qrcode.png'):
-    # Create instance of QRCode
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/")
+def home():
+    return render_template("index.html")  # This serves your HTML interface
+
+@app.route('/generate-qr', methods=['POST'])
+def generate_qr():
+    data = request.json.get('data')
+    if not data:
+        return {"error": "No data provided"}, 400
     qr = qrcode.QRCode(
-        version=1,  # controls the size of the QR Code
-        error_correction=qrcode.constants.ERROR_CORRECT_L,  # error correction level
-        box_size=10,  # size of each box
-        border=4,  # thickness of the border
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
     )
-    
-    # Add data to the QR code
     qr.add_data(data)
-    qr.make(fit=True)  # ensures the entire data fits in the QR code
-
-    # Create an image of the QR code
+    qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
+    img_io = BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/png')
 
-    # Save the image to a file
-    img.save(filename)
-    print(f"QR code saved as {filename}")
-
-# Ask the user for input
-website = input("Enter a website URL: ")
-
-# Generate QR code for the input website
-generate_qr_code(website, 'website_qrcode.png')
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)

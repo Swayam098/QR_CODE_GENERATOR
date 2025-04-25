@@ -1,30 +1,86 @@
-This project is a simple Python-based QR Code Generator that allows users to input a website URL and generate a QR code, which is then saved as a PNG image. It's an easy-to-use utility for creating scannable QR codes for sharing URLs or other data quickly and efficiently.
+QR Code Generator – Web App (Flask + HTML/JS)
+This project is a Python-based QR Code Generator with a modern web interface. Users can input a website URL or any text in the browser and generate a QR code, which is displayed instantly and can be downloaded as a PNG image. The backend is powered by Flask and Python’s qrcode library.
 
-Features:
-Input URL: Users can input a website URL via the command line.
-Custom QR Code Generation: The QR code is customizable in terms of size, error correction, and other parameters, ensuring flexibility and reliability.
-PNG Output: The generated QR code is saved as a PNG image in the local directory (or specified location).
+Features
+Web Interface: User-friendly, responsive web page for QR code generation.
 
-How to Use:
-Clone the repository to your local machine.
-Install the required Python library:
+Python Backend: Uses Flask to generate QR codes securely and efficiently.
 
-pip install qrcode[pil]
-Run the Python script:
+Custom QR Generation: Adjustable QR code parameters for reliability.
 
-python qr_code_generator.py
-When prompted, input the website URL you want to convert into a QR code.
-The QR code will be saved as website_qrcode.png in the project directory or a specified folder.
-Example:
+PNG Output: Downloadable QR code image.
 
-Enter a website URL: https://www.example.com
-QR code saved as website_qrcode.png
+No Command Line Needed: All interaction is through the browser.
 
-Customization:
-You can modify the code to adjust the size, border, or error correction level of the QR code. This can be useful if you want a larger or more durable QR code for different use cases, such as marketing, event promotions, or personal projects.
+Requirements
+Python 3.9 or newer
+(Python 3.11+ recommended; Python <=3.8 is not supported by latest qrcode)
 
-This project is a great way to learn about Python's qrcode library and how to generate and customize QR codes programmatically. It's beginner-friendly and can be expanded with additional features for more complex use cases.
+pip (Python package installer)
 
+Node.js/NPM: Not required unless you want to use a JS-only solution.
+
+Web browser (Chrome, Firefox, Edge, etc.)
+
+Installation
+Clone the repository:
+git clone <your-repo-url>
+cd "QR CODE GENERATOR"
+
+Install Python dependencies:
+pip install flask flask-cors qrcode[pil]
+
+If you get an error about Pillow or PIL, install it with:
+pip install pillow
+
+Project Structure
+
+QR CODE GENERATOR/
+│
+├── app.py
+├── static/
+│   └── script.js        # (if you have separate JS, otherwise ignore)
+└── templates/
+    └── index.html       # Your HTML interface
+
+Running the App
+Start the Flask server:
+
+bash
+python app.py
+By default, the server runs at http://127.0.0.1:5000/.
+
+Open your browser and go to:
+
+http://127.0.0.1:5000/
+Do NOT use "Live Server" or open index.html directly; always use the Flask server URL.
+
+How to Use
+Enter a URL or any text in the input field.
+
+Click "Generate QR Code".
+
+The QR code will appear below.
+
+Click "Download QR Code" to save the image.
+
+Customization
+QR Code Parameters:
+Edit app.py to change version, error_correction, box_size, or border in the qrcode.QRCode constructor.
+
+Interface:
+Edit templates/index.html and static/script.js for UI/UX changes.
+
+Troubleshooting
+404 or "File not found":
+Make sure you are visiting http://127.0.0.1:5000/ (Flask), not localhost:3000 or opening the HTML file directly.
+
+Module errors:
+Ensure you installed dependencies with pip install flask flask-cors qrcode[pil] pillow.
+
+Example
+Input: https://www.example.com
+Output: QR code displayed and downloadable as PNG.
 
 
 
